@@ -142,8 +142,8 @@ try:
 
     # GPS STATUS
     print("Waiting for GPS... ", end='', flush=True)
-    initStr = saluki.read_until(b'NEO-M8N-0').decode('ascii')
-    if initStr.find("NEO-M8N-0") > -1:
+    initStr = saluki.read_until(b'NEO-M').decode('ascii')
+    if initStr.find("NEO-M") > -1:
         print("ready.")
         time.sleep(2) # GPS actually ready in ~1s
     else:
@@ -194,7 +194,7 @@ try:
     # INA226
     saluki.write("ina226 status\n".encode('ascii'))
     inaStr = saluki.read_until(b'saluki>').decode('ascii')
-    if inaStr.find("Running on I2C Bus 2") > -1:
+    if inaStr.find("ina226_read") > -1:
         results['ina226'] = True
     else:
         print("Power module (INA226) not connected.")
