@@ -235,7 +235,7 @@ try:
         pass
 
     # Ethernet ping
-    saluki.write("ping 192.168.200.100\n".encode('ascii'))
+    saluki.write("ping -c 1 192.168.200.100\n".encode('ascii'))
     ethStr = saluki.read_until(b'saluki>').decode('ascii')
     if ethStr.find("No response") != -1:
         results['ethernet'] = True
@@ -260,7 +260,7 @@ try:
         elif key == 'O':
             orientation()
         elif key == 'P':
-            print(bootStr +'\n\n' + accStr +'\n\n' + barStr +'\n\n' + inaStr + '\n\n' + gpsStr)
+            print(bootStr +'\n\n' + accStr +'\n\n' + barStr +'\n\n' + inaStr + '\n\n' + gpsStr + '\n\n' + ethStr)
         elif key == 'A':
             restartApp()
 
