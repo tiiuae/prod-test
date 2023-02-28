@@ -213,6 +213,14 @@ try:
             print("SBUS bytes: {}".format(uartBytes))
             results['sbus'] = True
 
+    # Ethernet ping
+    saluki.write("ping -c 1 192.168.200.100\n".encode('ascii'))
+    ethStr = saluki.read_until(b'saluki>').decode('ascii')
+    if ethStr.find("No response") != -1:
+        results['ethernet'] = True
+    else:
+        print("Ping failed. Check ethernet cable connection.")
+        
     # SD CARD
     # Create directory and file on MicroSD card
     saluki.write("cd /fs/microsd\nmkdir prod_test_dir\nls\ncd prod_test_dir\ncat > prod_test_file\n".encode('ascii'))
@@ -233,14 +241,6 @@ try:
         print("\nacceleration: {}\npressure: {}\n".format(xyz, ps))
     except NameError:
         pass
-
-    # Ethernet ping
-    saluki.write("ping -c 1 192.168.200.100\n".encode('ascii'))
-    ethStr = saluki.read_until(b'saluki>').decode('ascii')
-    if ethStr.find("No response") != -1:
-        results['ethernet'] = True
-    else:
-        print("Ping failed. Check ethernet cable connection.")
     
     # Summary
     flushInput()
