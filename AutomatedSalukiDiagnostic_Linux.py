@@ -5,7 +5,7 @@ import sys, os, subprocess, time #
 # Global variables and constants
 #VIDPID_STRING = 'USB VID:PID=0403:6001'
 PORT = "/dev/ttyUSB0"
-results = {'accel_X': False, 'accel_Y': False, 'accel_Z': False, 'baro': False, 'gps': False, 'ina226': False, 'microSD': False, 'sbus': False}
+results = {'accel_X': False, 'accel_Y': False, 'accel_Z': False, 'baro': False, 'gps': False, 'ina226': False, 'microSD': False, 'sbus': False, 'ethernet': False}
 
 # Sensor value limits
 XY_LO_LIM = -1
@@ -234,6 +234,14 @@ try:
     except NameError:
         pass
 
+    # Ethernet ping
+    saluki.write("ping 192.168.200.100\n".encode('ascii'))
+    ethStr = saluki.read_until(b'saluki>').decode('ascii')
+    if ethStr.find("No response") != -1:
+        results['ethernet'] = True
+    else:
+        print("Ping failed. Check ethernet cable connection.")
+    
     # Summary
     flushInput()
     for i in results:
