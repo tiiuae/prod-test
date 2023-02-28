@@ -216,7 +216,7 @@ try:
     # Ethernet ping
     saluki.write("ping -c 1 192.168.200.100\n".encode('ascii'))
     ethStr = saluki.read_until(b'saluki>').decode('ascii')
-    if ethStr.find("No response") != -1:
+    if ethStr.find("1 received") > -1:
         results['ethernet'] = True
     else:
         print("Ping failed. Check ethernet cable connection.")
