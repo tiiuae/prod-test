@@ -247,6 +247,7 @@ try:
     for i in results:
         if results[i]:
             print("{} passed.".format(i))
+            print("PX4GUID: " + guid)
         else:
             print("\033[0;31m{} failed.\033[0m".format(i)) # red text
     if all(results.values()):
